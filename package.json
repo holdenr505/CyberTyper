@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --config webpack.config.js",
     "watch": "npx webpack --watch",
-    "start": "nodemon --env-file=.env server.js"
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
