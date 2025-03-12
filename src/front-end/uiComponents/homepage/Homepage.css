@@ -1,0 +1,7 @@
+#homepage-component {
+    width: 50%;
+}
+
+.invalid {
+    color: var(--secondary-color);
+}

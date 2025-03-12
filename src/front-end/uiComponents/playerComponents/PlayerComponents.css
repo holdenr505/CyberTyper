@@ -1,0 +1,25 @@
+#racetrack {
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 80%;
+    max-width: 800px;
+}
+
+#divider {
+    content: '';
+    width: 100%;
+    border: 2px dashed var(--primary-color);
+}
+
+.player {
+    font-size: 0.75rem;
+    margin: 0.5em 0em;
+    padding: 0.25em 0em;
+    width: 20%;
+    max-width: 60px;
+    border-bottom: 2px dashed var(--primary-color);
+}
+
+.player * {
+    margin: 0.25em;
+}
