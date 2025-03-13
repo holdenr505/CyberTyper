@@ -43,7 +43,6 @@ class DomController {
     }
 
     handleNextBtn() {
-        this._uiComponents.typingPanel.children.nextBtn.classList.add('disable-btn');
         this.resetGameDisplay();
         this._eventBus.dispatchEvent(new CustomEvent('leave room'));
         this._eventBus.dispatchEvent(new CustomEvent('join race', { detail: this._uiComponents.homepage.children.nameInput.value }));
@@ -71,6 +70,8 @@ class DomController {
     resetGameDisplay() {
         this._wordIndex = 0;
         this._uiComponents.racetrack.clearPlayers();
+        this._uiComponents.typingPanel.children.nextBtn.classList.add('disable-btn');
+        this._uiComponents.typingPanel.children.playerInput.value = '';
         this._uiComponents.typingPanel.children.playerInput.disabled = true;
         this._uiComponents.typingPanel.children.nextBtn.classList.remove('enable-btn');
         this._uiComponents.typingPanel.gameInfo = 'Waiting for players...';
