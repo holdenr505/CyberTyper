@@ -60,10 +60,6 @@ const registerSocketHandlers = (socket, eventBus) => {
     eventBus.addEventListener('request update', () => {
         socket.volatile.emit('request update');
     });
-
-    eventBus.addEventListener('player victory', () => {
-        socket.emit('player victory');
-    });
 }
 
 export default registerSocketHandlers;

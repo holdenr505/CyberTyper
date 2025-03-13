@@ -29,10 +29,16 @@ const handleJoinRace = async (socket, rooms, io, name) => {
     return availableRoom;
 }
 
+// update player word list and check if the player has completed the prompt
 const handleSendWord = (socket, room, word) => {
     if (!room) return;
     const player = room.getPlayer(socket.id);
     player.appendWord(word);
+
+    const playerText = player.getWords().map(entry => entry.word).join(' ');
+    if (playerText === room.prompt) {
+        room.broadcast('game over', { winningPlayer: player.name });
+    }
 }
 
 // calculate player WPM and send result to
@@ -46,19 +52,6 @@ const handleRequestUpdate = (socket, room) => {
     const player = room.getPlayer(socket.id);
     const wpm = player.calculateWPM();
     room.broadcast('update player', { typedWords: player.getWords(), wpm: wpm, id: player.id });
-}
-
-// handle player victory
-const handlePlayerVictory = (socket, rooms, room) => {
-    const winningPlayer = room.getPlayer(socket.id);
-    winningPlayer.finishTime = Date.now();
-
-    Object.entries(room.getAllPlayers()).forEach(([id, player]) => {
-        if (player.finishTime < winningPlayer.finishTime) winningPlayer = player;
-    });
-
-    room.broadcast('game over', { winningPlayer: winningPlayer.name, room: room.id});
-    rooms.delete(room.id);
 }
 
 // handle player disconnects
@@ -113,9 +106,6 @@ const registerSocketHandlers = async (socket, rooms, io) => {
     })
     socket.on('request update', () => {
         handleRequestUpdate(socket, currentRoom);
-    });
-    socket.on('player victory', () => {
-        handlePlayerVictory(socket, rooms, currentRoom);
     });
 
     let dcEvents = ['disconnect', 'leave room'];

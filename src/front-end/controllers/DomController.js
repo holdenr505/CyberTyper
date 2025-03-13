@@ -58,7 +58,6 @@ class DomController {
 
                 if (this._wordIndex >= words.length) {
                     this._wordIndex = 0;
-                    this._eventBus.dispatchEvent(new CustomEvent('player victory'));
                 }
                 else {
                     this.updatePrompt(this._uiComponents.typingPanel.prompt, this._wordIndex);
