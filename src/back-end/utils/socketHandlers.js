@@ -4,22 +4,17 @@ import Room from '../entities/Room.js';
 
 // handle join race event and return the joined room
 const handleJoinRace = async (socket, rooms, io, name) => {
-    let availableRoom;
-
-    rooms.forEach(room => {
-        // find a room that isn't full
-        if (!room.isFull() && !room.started) {
-            availableRoom = room;
-            availableRoom.addPlayer(socket.id, new Player(socket.id, name));
-        }
-    });
+    let availableRoom = [...rooms.values()].find(room => !room.isFull() && !room.started);
 
     // create a new room and add the new player to it
-    if (!availableRoom) availableRoom = new Room(io, await generatePrompt(), 
-        new Map([[socket.id, new Player(socket.id, name)]]));
+    if (!availableRoom) {
+        const prompt = await generatePrompt();
+        availableRoom = new Room(io, prompt, new Map());
+        rooms.set(availableRoom.id, availableRoom);
+    }
 
     rooms.set(availableRoom.id, availableRoom);
-
+    availableRoom.addPlayer(socket.id, new Player(socket.id, name));
     socket.join(availableRoom.id);
     socket.to(availableRoom.id).emit('player joined', { id: socket.id, name: name });
     console.log(`Player with ID: ${socket.id} joined room ${availableRoom.id}`)
