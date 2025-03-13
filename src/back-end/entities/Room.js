@@ -5,7 +5,7 @@ class Room {
         this.prompt = prompt;
         this.started = false;
         this._players = players;
-        this._size = 1;
+        this._size = 2;
         this._io = io;
     }
 
