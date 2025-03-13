@@ -5,7 +5,7 @@ import url from 'url';
 import { Server } from 'socket.io';
 import registerSocketHandlers from './src/back-end/utils/socketHandlers.js';
 
-const port = process.env.PORT;
+const port = process.env.PORT || 8080;
 const rooms = new Map();
 
 // convert url to path, then get only the directory (exclude the filename)

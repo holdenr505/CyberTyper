@@ -17,6 +17,7 @@ class TypingPanel {
         this._uiReferences.playerInput.addEventListener('input', inputCallback);
         this._uiReferences.playerInput.setAttribute('aria-label', 'Typing area');
         this._uiReferences.playerInput.disabled = true;
+        this._uiReferences.playerInput.autocapitalize = false;
 
         this.panel.id = 'typing-panel';
         this._uiReferences.promptParagraph.id = 'prompt';
@@ -43,7 +44,7 @@ class TypingPanel {
     }
 
     get gameInfo() {
-        return this._uiReferences.gameInfo.textContent;
+        return this._uiReferences.gameInfo;
     }
 
     set gameInfo(info) {

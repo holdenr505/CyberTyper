@@ -18,7 +18,7 @@ const eventBusHandlers = {
 
     'player joined': function(event) {
         const { id, name } = event.detail;
-        this._uiComponents.racetrack.addPlayer({car: 'red', name, id});
+        this._uiComponents.racetrack.addPlayer({car: 'purple', name, id});
     },
 
     'player disconnected': function(event) {
