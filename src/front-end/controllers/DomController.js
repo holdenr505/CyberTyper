@@ -50,10 +50,9 @@ class DomController {
     }
 
     handlePlayerInput() {
-        const words = this._uiComponents.typingPanel.prompt.split(' ');
         if (this._uiComponents.typingPanel.children.playerInput.value.endsWith(' ')) {
-            this._uiComponents.typingPanel.children.playerInput.value = this._uiComponents.typingPanel.children.playerInput.value.trim();
-            if (this._uiComponents.typingPanel.children.playerInput.value === words[this._wordIndex]) {
+            const words = this._uiComponents.typingPanel.prompt.split(' ');
+            if (this._uiComponents.typingPanel.children.playerInput.value.trim() === words[this._wordIndex]) {
                 this._eventBus.dispatchEvent(new CustomEvent('send word', { detail: words[this._wordIndex] }));
                 this._uiComponents.typingPanel.children.playerInput.value = '';
                 this._wordIndex++;
