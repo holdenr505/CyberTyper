@@ -6,6 +6,13 @@ CyberTyper is an online multiplayer typing game where players compete in real ti
 
 - [Live Site URL](https://cybertyper.onrender.com)
 
+## Todo
+
+- User authentication
+- Leaderboard
+- UI update
+- Car customization
+
 ## License
 
 CyberTyper is licensed under the MIT license. For more information, consult the LICENSE file.
