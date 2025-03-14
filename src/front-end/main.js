@@ -4,10 +4,10 @@
 
 import io from 'socket.io-client'; // socket for client
 import registerSocketHandlers from './utils/socketHandlers.js';
-import Header from './uiComponents/header/Header.js';
-import Homepage from './uiComponents/homepage/Homepage.js';
-import TypingPanel from './uiComponents/typingPanel/TypingPanel.js';
-import Racetrack from './uiComponents/playerComponents/PlayerComponents.js';
+import Header from './ui_components/header/Header.js';
+import Homepage from './ui_components/homepage/Homepage.js';
+import TypingPanel from './ui_components/typing_panel/TypingPanel.js';
+import Racetrack from './ui_components/player_components/PlayerComponents.js';
 import DomController from './controllers/DomController.js';
 import eventBus from './shared/eventBus.js';
 import eventBusHandlers from './utils/eventBusHandlers.js';

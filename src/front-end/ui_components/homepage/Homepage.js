@@ -1,5 +1,6 @@
 import './Homepage.css';
 
+// remember to commit preventing stacking callbacks
 class Homepage {
     constructor(joinCallback = () => {}) {
         this.page = document.createElement('div');
@@ -17,7 +18,7 @@ class Homepage {
 
         this._uiReferences.nameParagraph.textContent = 'Enter your name:';
         this._uiReferences.joinBtn.textContent = 'Join race';
-        this._uiReferences.joinBtn.addEventListener('click', joinCallback);
+        this._uiReferences.joinBtn.onclick = joinCallback;
 
         this.page.append(this._uiReferences.nameParagraph, this._uiReferences.nameInput, this._uiReferences.joinBtn);
     }
@@ -28,7 +29,7 @@ class Homepage {
 
     setJoinCallback(callback) {
         if (typeof callback !== 'function') return;
-        this._uiReferences.joinBtn.addEventListener('click', callback);
+        this._uiReferences.joinBtn.onclick = callback;
     }
 }
 

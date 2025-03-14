@@ -1,11 +1,5 @@
 import './PlayerComponents.css';
-import purpleCar from './cars/purplecar.svg';
-import redCar from './cars/redcar.svg';
-
-const cars = {
-    purple: purpleCar,
-    red: redCar,
-}
+import assets from '../../assets/assets.js';
 
 class PlayerComponent {
     constructor({car, name, id}) {
@@ -21,10 +15,13 @@ class PlayerComponent {
         
         this._uiReferences.playerName.textContent = name;
         this._uiReferences.playerWpm.textContent = '0 wpm';
+
         this._uiReferences.playerName.classList.add('player-name');
         this._uiReferences.playerWpm.classList.add('player-wpm');
-        this._uiReferences.playerCar.src = cars[car];
+
+        this._uiReferences.playerCar.src = assets.cars[car];
         this._uiReferences.playerCar.alt = 'Player car';
+        
         this.playerComponent.append(this._uiReferences.playerName, this._uiReferences.playerCar, this._uiReferences.playerWpm);
     }
 
@@ -46,9 +43,7 @@ class PlayerComponent {
     }
 
     set car(car) {
-        if (car in cars) {
-            this._uiReferences.playerCar.src = cars[car];
-        }
+        this._uiReferences.playerCar.src = car;
     }
 
     get wpm() {

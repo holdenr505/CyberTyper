@@ -9,7 +9,7 @@ class DomController {
         // register event handlers here
         this.registerEventBusHandlers(eventHandlers);
         this._uiComponents.homepage.setJoinCallback(this.handleJoinBtn.bind(this));
-        this._uiComponents.typingPanel.setBtnCallback(this.handleNextBtn.bind(this));
+        this._uiComponents.typingPanel.setNextCallback(this.handleNextBtn.bind(this));
         this._uiComponents.typingPanel.setInputCallback(this.handlePlayerInput.bind(this));
     }
 

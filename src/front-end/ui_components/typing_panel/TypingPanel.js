@@ -1,5 +1,6 @@
 import './TypingPanel.css';
 
+// remember to commit preventing stacking callbacks
 class TypingPanel {
     constructor({prompt, message, inputCallback = () => {}, nextCallback = () => {}}) {
         this.panel = document.createElement('div');
@@ -13,8 +14,8 @@ class TypingPanel {
         this._uiReferences.promptParagraph.textContent = prompt;
         this._uiReferences.gameInfo.textContent = message;
         this._uiReferences.nextBtn.textContent  = 'Next race';
-        this._uiReferences.nextBtn.addEventListener('click', nextCallback);
-        this._uiReferences.playerInput.addEventListener('input', inputCallback);
+        this._uiReferences.nextBtn.onclick = nextCallback;
+        this._uiReferences.playerInput.oninput = inputCallback;
         this._uiReferences.playerInput.setAttribute('aria-label', 'Typing area');
         this._uiReferences.playerInput.disabled = true;
         this._uiReferences.playerInput.autocapitalize = 'off';
@@ -52,14 +53,14 @@ class TypingPanel {
         this._uiReferences.gameInfo.textContent = info;
     }
 
-    setBtnCallback(callback) {
-        if (typeof callback !== 'function') return;
-        this._uiReferences.nextBtn.addEventListener('click', callback);
-    }
-
     setInputCallback(callback) {
         if (typeof callback !== 'function') return;
-        this._uiReferences.playerInput.addEventListener('input', callback);
+        this._uiReferences.playerInput.oninput = callback;
+    }
+
+    setNextCallback(callback) {
+        if (typeof callback !== 'function') return;
+        this._uiReferences.nextBtn.onclick = callback;
     }
 }
 

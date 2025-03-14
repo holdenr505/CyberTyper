@@ -1,12 +1,12 @@
 {
   "name": "typeracer",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "main": "server.js",
   "type": "module",
   "scripts": {
     "build": "webpack --config webpack.config.js",
-    "watch": "npx webpack --watch",
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
