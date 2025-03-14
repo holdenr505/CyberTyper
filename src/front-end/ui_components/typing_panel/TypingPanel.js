@@ -1,6 +1,5 @@
 import './TypingPanel.css';
 
-// remember to commit preventing stacking callbacks
 class TypingPanel {
     constructor({prompt, message, inputCallback = () => {}, nextCallback = () => {}}) {
         this.panel = document.createElement('div');
@@ -17,8 +16,13 @@ class TypingPanel {
         this._uiReferences.nextBtn.onclick = nextCallback;
         this._uiReferences.playerInput.oninput = inputCallback;
         this._uiReferences.playerInput.setAttribute('aria-label', 'Typing area');
+        
+        // remove autocapitalization and form suggestions
         this._uiReferences.playerInput.disabled = true;
+        this._uiReferences.playerInput.autocorrect = 'off';
+        this._uiReferences.playerInput.spellcheck = 'false';
         this._uiReferences.playerInput.autocapitalize = 'off';
+        this._uiReferences.playerInput.autocomplete = 'off';
 
         this.panel.id = 'typing-panel';
         this._uiReferences.promptParagraph.id = 'prompt';
