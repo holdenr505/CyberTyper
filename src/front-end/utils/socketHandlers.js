@@ -7,9 +7,9 @@ const registerSocketHandlers = (socket, eventBus) => {
         eventBus.dispatchEvent(new CustomEvent('reconnect', { detail: socket.id }));
     });
 
-    socket.on('player joined', (player) => {
-        const { name, id } = player;
-        eventBus.dispatchEvent(new CustomEvent('player joined', { detail: { name, id } }));
+    socket.on('player joined', (playerData) => {
+        const { name, id, car } = playerData;
+        eventBus.dispatchEvent(new CustomEvent('player joined', { detail: { name, id, car } }));
     })
 
     socket.on('countdown', (remainingTime) => {
@@ -44,8 +44,8 @@ const registerSocketHandlers = (socket, eventBus) => {
         if (!socket.connected) {
             socket.connect();
         }
-        const name = event.detail;
-        socket.emit('join race', name);
+        const { name, car } = event.detail;
+        socket.emit('join race', { name, car });
     });
 
     eventBus.addEventListener('leave room', () => {

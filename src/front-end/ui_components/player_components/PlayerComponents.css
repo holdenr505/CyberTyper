@@ -9,10 +9,17 @@
     font-size: 0.75rem;
     margin: 0.5em 0em;
     padding: 0.25em 0em;
-    width: 60px;
     border-bottom: 2px dashed var(--primary-color);
+}
+
+.player > img {
+    width: 60px;
 }
 
 .player * {
     margin: 0.25em;
+}
+
+.invalid {
+    color: var(--secondary-color);
 }

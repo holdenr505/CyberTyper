@@ -1,9 +1,9 @@
-import './Homepage.css';
+import './NameComponent.css';
 
-class Homepage {
+class NameComponent {
     constructor(joinCallback = () => {}) {
-        this.page = document.createElement('div');
-        this.page.id = 'homepage-component';
+        this.component = document.createElement('div');
+        this.component.id = 'name-component';
 
         this._uiReferences = {
             nameParagraph: document.createElement('p'),
@@ -15,7 +15,7 @@ class Homepage {
         this._uiReferences.joinBtn.id = 'join-btn';
         this._uiReferences.nameInput.id = 'name-input';
 
-        this._uiReferences.nameParagraph.textContent = 'Enter your name:';
+        this._uiReferences.nameParagraph.textContent = 'Select a car and enter your name:';
         this._uiReferences.joinBtn.textContent = 'Join race';
         
         // remove autocapitalization and form suggestions
@@ -25,7 +25,8 @@ class Homepage {
         this._uiReferences.nameInput.autocapitalize = 'off';
         
         this._uiReferences.joinBtn.onclick = joinCallback;
-        this.page.append(this._uiReferences.nameParagraph, this._uiReferences.nameInput, this._uiReferences.joinBtn);
+        this.component.append(this._uiReferences.nameParagraph, 
+            this._uiReferences.nameInput, this._uiReferences.joinBtn);
     }
 
     get children() {
@@ -38,4 +39,4 @@ class Homepage {
     }
 }
 
-export default Homepage;
+export default NameComponent;

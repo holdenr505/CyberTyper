@@ -1,3 +1,5 @@
+// handlers responsible for updating the UI when DomController
+// receives an event from the server
 const eventBusHandlers = {
     'reconnect': function(event) {
         this.resetGameDisplay();
@@ -12,13 +14,13 @@ const eventBusHandlers = {
         this.updatePrompt(prompt, 0);
 
         Object.entries(players).forEach(([id, player]) => {
-            this._uiComponents.racetrack.addPlayer({ car: 'purple', name: player.name, id });
+            this._uiComponents.racetrack.addPlayer({ id, name: player.name, car: player.car });
         });
     },
 
     'player joined': function(event) {
-        const { id, name } = event.detail;
-        this._uiComponents.racetrack.addPlayer({car: 'purple', name, id});
+        const { id, name, car } = event.detail;
+        this._uiComponents.racetrack.addPlayer({ id, name, car });
     },
 
     'player disconnected': function(event) {

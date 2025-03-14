@@ -3,7 +3,7 @@ import Player from '../entities/Player.js';
 import Room from '../entities/Room.js';
 
 // handle join race event and return the joined room
-const handleJoinRace = async (socket, rooms, io, name) => {
+const handleJoinRace = async (socket, rooms, io, name, car) => {
     let availableRoom = [...rooms.values()].find(room => !room.isFull() && !room.started);
 
     // create a new room and add the new player to it
@@ -14,12 +14,11 @@ const handleJoinRace = async (socket, rooms, io, name) => {
     }
 
     rooms.set(availableRoom.id, availableRoom);
-    availableRoom.addPlayer(socket.id, new Player(socket.id, name));
+    availableRoom.addPlayer(socket.id, new Player(socket.id, name, [], car));
     socket.join(availableRoom.id);
-    socket.to(availableRoom.id).emit('player joined', { id: socket.id, name: name });
+    console.log(car);
+    socket.to(availableRoom.id).emit('player joined', { id: socket.id, name: name, car: car });
     console.log(`Player with ID: ${socket.id} joined room ${availableRoom.id}`)
-
-    console.log(socket.rooms);
 
     return availableRoom;
 }
@@ -30,7 +29,7 @@ const handleSendWord = (socket, room, word) => {
     const player = room.getPlayer(socket.id);
     player.appendWord(word);
 
-    const playerText = player.getWords().map(entry => entry.word).join(' ');
+    const playerText = player.typedWords.map(entry => entry.word).join(' ');
     if (playerText === room.prompt) {
         room.broadcast('game over', { winningPlayer: player.name });
     }
@@ -46,7 +45,7 @@ const handleRequestUpdate = (socket, room) => {
 
     const player = room.getPlayer(socket.id);
     const wpm = player.calculateWPM();
-    room.broadcast('update player', { typedWords: player.getWords(), wpm: wpm, id: player.id });
+    room.broadcast('update player', { typedWords: player.typedWords, wpm: wpm, id: player.id });
 }
 
 // handle player disconnects
@@ -90,8 +89,9 @@ const registerSocketHandlers = async (socket, rooms, io) => {
     
     if (typeof socket.on !== 'function') return;
     
-    socket.on('join race', async (name) => {
-        currentRoom = await handleJoinRace(socket, rooms, io, name);
+    socket.on('join race', async (playerData) => {
+        const { name, car } = playerData;
+        currentRoom = await handleJoinRace(socket, rooms, io, name, car);
         // player data must be in a form that can be serialized (will lose methods, only preserve state)
         socket.emit('room data', { prompt: currentRoom.prompt, players: Object.fromEntries(currentRoom.getAllPlayers()) });
         if (currentRoom.isFull()) initRace(currentRoom);

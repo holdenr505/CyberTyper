@@ -1,8 +1,0 @@
-#homepage-component {
-    width: 50%;
-    max-width: 600px;
-}
-
-.invalid {
-    color: var(--secondary-color);
-}

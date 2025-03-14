@@ -1,0 +1,22 @@
+#car-selector {
+    display: flex;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.car-option + img {
+    width: 60px;
+    transition: transform 0.2s ease-out, filter 0.2s ease-in-out;
+}
+
+input[type='radio']:checked + img {
+    filter: drop-shadow(0 0 3px var(--primary-color));
+    transform: rotate(30deg) scale(1.2);
+}
+
+@media (hover: hover) {
+    .car-option:hover + img {
+        filter: drop-shadow(0 0 3px var(--secondary-color));
+        transform: rotate(30deg) scale(1.1);
+    }
+}

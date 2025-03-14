@@ -1,14 +1,14 @@
 // centralize UI updates
 class DomController {
-   constructor (header, homepage, typingPanel, racetrack, eventBus, eventHandlers = {}) {
-        this._uiComponents = { header, homepage, typingPanel, racetrack };   
+   constructor (header, carSelector, nameComponent, typingPanel, racetrack, eventBus, eventHandlers = {}) {
+        this._uiComponents = { header, carSelector, nameComponent, typingPanel, racetrack };   
         this._wordIndex = 0;
         this._eventBus = eventBus; // eventBus singleton
         this._updateInterval; // interval for UI update request
 
         // register event handlers here
         this.registerEventBusHandlers(eventHandlers);
-        this._uiComponents.homepage.setJoinCallback(this.handleJoinBtn.bind(this));
+        this._uiComponents.nameComponent.setJoinCallback(this.handleJoinBtn.bind(this));
         this._uiComponents.typingPanel.setNextCallback(this.handleNextBtn.bind(this));
         this._uiComponents.typingPanel.setInputCallback(this.handlePlayerInput.bind(this));
     }
@@ -30,22 +30,30 @@ class DomController {
         }
     }
 
+    // event handlers for UI elements
     handleJoinBtn() {
-        if (!this._uiComponents.homepage.children.nameInput.value.trim()) {
-            this._uiComponents.homepage.children.nameParagraph.classList.add('invalid');
-            this._uiComponents.homepage.children.nameParagraph.textContent = 'Invalid name. Try again';
+        if (!this._uiComponents.nameComponent.children.nameInput.value.trim() || !this._uiComponents.carSelector.selectedCar) {
+            this._uiComponents.nameComponent.children.nameParagraph.classList.add('invalid');
+            this._uiComponents.nameComponent.children.nameParagraph.textContent = 'Select a car and enter a name:';
         }
         else {
-            document.body.replaceChild(this._uiComponents.racetrack.track, this._uiComponents.homepage.page);
-            document.body.append(this._uiComponents.typingPanel.panel);
-            this._eventBus.dispatchEvent(new CustomEvent('join race', { detail: this._uiComponents.homepage.children.nameInput.value }));
+            const name = this._uiComponents.nameComponent.children.nameInput.value;
+            const car = this._uiComponents.carSelector.selectedCar;
+            this._uiComponents.nameComponent.component.replaceWith(
+                this._uiComponents.racetrack.track,
+                this._uiComponents.typingPanel.panel
+            );
+            this._uiComponents.carSelector.selector.remove();
+            this._eventBus.dispatchEvent(new CustomEvent('join race', { detail: { name, car } }));
         }
     }
 
     handleNextBtn() {
+        const name = this._uiComponents.nameComponent.children.nameInput.value;
+        const car = this._uiComponents.carSelector.selectedCar;
         this.resetGameDisplay();
         this._eventBus.dispatchEvent(new CustomEvent('leave room'));
-        this._eventBus.dispatchEvent(new CustomEvent('join race', { detail: this._uiComponents.homepage.children.nameInput.value }));
+        this._eventBus.dispatchEvent(new CustomEvent('join race', { detail: { name, car } }));
     }
 
     handlePlayerInput() {
@@ -66,6 +74,7 @@ class DomController {
         }
     }
 
+    // reset the display before the next race
     resetGameDisplay() {
         this._wordIndex = 0;
         this._uiComponents.racetrack.clearPlayers();
@@ -79,7 +88,7 @@ class DomController {
 
     render() {
         document.body.innerHTML = '';
-        document.body.append(this._uiComponents.header.header, this._uiComponents.homepage.page);
+        document.body.append(this._uiComponents.header.headerElement, this._uiComponents.carSelector.selector, this._uiComponents.nameComponent.component);
     }
 };
 

@@ -2,7 +2,7 @@ import './Header.css';
 
 class Header {
     constructor(logo) {
-        this.header = document.createElement('header');
+        this.headerElement = document.createElement('header');
         this._uiReferences = {
             logo: document.createElement('a'),
         };
@@ -11,7 +11,7 @@ class Header {
         this._uiReferences.logo.href = '/';
         this._uiReferences.logo.innerHTML = `<img src='${logo}' alt='CyberTyper'>`;
 
-        this.header.append(this._uiReferences.logo);
+        this.headerElement.append(this._uiReferences.logo);
     }
 
     get children() {

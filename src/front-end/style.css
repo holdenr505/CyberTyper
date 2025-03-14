@@ -1,7 +1,7 @@
 :root {
     --primary-font: 'Orbitron', sans-serif;
     --secondary-font: 'Audiowide', sans-serif;
-    --primary-color: #00E6FE;
+    --primary-color: #00e5fece;
     --secondary-color: #FF007A;
     --bg-color: #0D1117;
     --panel-color: #1F1F2E;
@@ -11,31 +11,49 @@
 }
 
 * {
-    margin: 0rem;
-    padding: 0rem;
+    margin: 0;
+    padding: 0;
 }
 
-body, #typing-panel, #racetrack, #homepage-component {
+body, #typing-panel, #racetrack, #name-component {
     display: flex;
     flex-direction: column;
     padding: 1rem;
 }
 
-#typing-panel, #racetrack, #homepage-component {
-    gap: 1rem;
+#typing-panel, #racetrack, #name-component {
+    gap: 1.25rem;
+}
+
+#typing-panel, #name-component {
+    box-shadow: 0 0 3px var(--primary-color);
+    border-radius: 8px;
+    background-color: var(--panel-color);
+    align-items: center;
+}
+
+#join-btn, #next-btn, input {
+    padding: 0.25rem;
+    border-radius: 5px;
+    box-shadow: 1px 1px 2px var(--bg-color);
+    outline: none;
+    border: none;
+}
+
+#join-btn, #next-btn {
+    background-color: var(--primary-color);
+    color: white;
+    transition: 0.2s ease-out background-color;
+}
+
+#join-btn:hover, #next-btn:hover {
+    background-color: var(--secondary-color);
 }
 
 body {
     background-color: var(--bg-color);
     align-items: center;
-    gap: 2rem;
-}
-
-#typing-panel, #homepage-component {
-    border: 2px solid var(--primary-color);
-    border-radius: 5px;
-    background-color: var(--panel-color);
-    align-items: center;
+    gap: 1.5rem;
 }
 
 input {
@@ -43,24 +61,7 @@ input {
     text-align: center;
 }
 
-button, input {
-    padding: 0.25rem;
-    border-radius: 5px;
-    outline: none;
-    border: none;
-}
-
-button {
-    background-color: var(--primary-color);
-    color: white;
-    transition: 0.2s ease-out background-color;
-}
-
-button:hover {
-    background-color: var(--secondary-color);
-}
-
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 600px) {
     #prompt {
         font-size: 0.75rem;
     }
@@ -69,7 +70,7 @@ button:hover {
         width: 200px;
     }
 
-    .player {
+    .player > img {
         width: 40px;
     }
 }

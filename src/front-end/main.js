@@ -2,10 +2,11 @@
 *   Date: February 13th, 2025                 *
 **  Description: An online type racing game  **/
 
-import io from 'socket.io-client'; // socket for client
+import io from 'socket.io-client';
 import registerSocketHandlers from './utils/socketHandlers.js';
 import Header from './ui_components/header/Header.js';
-import Homepage from './ui_components/homepage/Homepage.js';
+import CarSelector from './ui_components/car_selector/CarSelector.js';
+import NameComponent from './ui_components/name_component/NameComponent.js';
 import TypingPanel from './ui_components/typing_panel/TypingPanel.js';
 import Racetrack from './ui_components/player_components/PlayerComponents.js';
 import assets from './assets/assets.js';
@@ -31,8 +32,8 @@ const main = async () => {
     try {
         const serverAddr = await fetchAddr();
         const socket = io(serverAddr, { autoConnect: false });
-        const controller = new DomController(new Header(assets.logo),
-        new Homepage(), new TypingPanel('Generating prompt...', 'Waiting for players...'), 
+        const controller = new DomController(new Header(assets.logo), new CarSelector(assets.cars),
+        new NameComponent(), new TypingPanel({ prompt: 'Generating prompt...', message: 'Waiting for players...' }), 
         new Racetrack(), eventBus, eventBusHandlers);
     
         controller.render();
