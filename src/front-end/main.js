@@ -8,6 +8,7 @@ import Header from './ui_components/header/Header.js';
 import Homepage from './ui_components/homepage/Homepage.js';
 import TypingPanel from './ui_components/typing_panel/TypingPanel.js';
 import Racetrack from './ui_components/player_components/PlayerComponents.js';
+import assets from './assets/assets.js';
 import DomController from './controllers/DomController.js';
 import eventBus from './shared/eventBus.js';
 import eventBusHandlers from './utils/eventBusHandlers.js';
@@ -30,7 +31,7 @@ const main = async () => {
     try {
         const serverAddr = await fetchAddr();
         const socket = io(serverAddr, { autoConnect: false });
-        const controller = new DomController(new Header('CyberTyper'),
+        const controller = new DomController(new Header(assets.logo),
         new Homepage(), new TypingPanel('Generating prompt...', 'Waiting for players...'), 
         new Racetrack(), eventBus, eventBusHandlers);
     
