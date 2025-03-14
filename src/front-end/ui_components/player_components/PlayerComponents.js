@@ -4,7 +4,7 @@ import assets from '../../assets/assets.js';
 class PlayerComponent {
     constructor({car, name, id}) {
         this.playerComponent = document.createElement('div');
-        this.playerComponent.id = id;
+        this.playerComponent.setAttribute('data-id', id);
         this.playerComponent.classList.add('player');
 
         this._uiReferences = {
@@ -75,7 +75,7 @@ class Racetrack {
         if (!this._players[id]) return;
 
         delete this._players[id];
-        const player = this.track.querySelector(`#${id}`);
+        const player = this.track.querySelector(`[data-id='${id}']`);
         if (player) {
             player.remove();
         }

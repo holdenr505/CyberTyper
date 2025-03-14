@@ -16,7 +16,6 @@ const handleJoinRace = async (socket, rooms, io, name, car) => {
     rooms.set(availableRoom.id, availableRoom);
     availableRoom.addPlayer(socket.id, new Player(socket.id, name, [], car));
     socket.join(availableRoom.id);
-    console.log(car);
     socket.to(availableRoom.id).emit('player joined', { id: socket.id, name: name, car: car });
     console.log(`Player with ID: ${socket.id} joined room ${availableRoom.id}`)
 
